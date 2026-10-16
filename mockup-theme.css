@@ -1,0 +1,80 @@
+/* Shared column treatment and macOS dark appearance. */
+.appearance{justify-self:end;display:flex;gap:2px;padding:3px;border-radius:8px;background:#e7eaf0}
+.appearance button{font-size:12px;padding:4px 9px;border-radius:5px;color:#777f8e}
+.appearance button[aria-pressed=true]{background:#fff;color:#354253;box-shadow:0 1px 3px #19273b18}
+.grid:not(.csv) th:first-child,.grid:not(.csv) td:first-child{background:#f6f8fb;border-right:1px solid #dce3ed}
+.grid:not(.csv) th:nth-child(2){color:#52677f;background:#f0f5fb}
+.grid:not(.csv) td:nth-child(2){padding-left:20px;border-right:1px solid #edf0f5}
+.grid:not(.csv) tr.selected td:first-child{background:#dceafa}
+.grid:not(.csv) tr:not(.selected):hover td:first-child{background:#eef3f9}
+.grid:not(.csv) td.value:not(:has(.summary)):hover{box-shadow:inset 0 0 0 1px #92b9e2;background:#f6faff}
+.grid:not(.csv) .label{color:#46566c}.grid:not(.csv) .group-label{color:#314a69}
+.grid:not(.csv) .value{color:#303e51}.grid:not(.csv) .value.numeric{color:#986122}
+.grid th{font-weight:600}.csv td+td,.csv th+th{border-left:1px solid var(--line)}
+html[data-theme=dark]{color-scheme:dark;--blue:#459cf5;--muted:#a2adbc;--line:#343e4c;--soft:#222a36;--surface:#232b37;--ink:#e0e7f1;color:var(--ink)}
+html[data-theme=dark] body{background:radial-gradient(ellipse at 10% 12%,#304763,transparent 55%),radial-gradient(ellipse at 90% 95%,#39384d,transparent 55%),#151c28}
+html[data-theme=dark] .window{background:#232c39ed;border-color:#5b6a7c70;box-shadow:0 30px 90px #0006,0 2px 10px #0003}
+html[data-theme=dark] .titlebar{background:#2a3443bd;border-color:#3a4655}
+html[data-theme=dark] .brand svg{color:#81b6ef}
+html[data-theme=dark] .appearance{background:#1e2734}
+html[data-theme=dark] .appearance button{color:#9aa8ba}
+html[data-theme=dark] .appearance button[aria-pressed=true]{background:#425169;color:#eef5ff}
+html[data-theme=dark] .fileicon{background:#293e56;border-color:#3c5570;color:#8cbeef}
+html[data-theme=dark] .filepath{color:#94a0b3}
+html[data-theme=dark] .formats{background:#20293666}
+html[data-theme=dark] .formats button{color:#96a3b6}
+html[data-theme=dark] .formats button.active{color:#72b5ff;border-color:#72b5ff}
+html[data-theme=dark] .controls{background:#27313e}
+html[data-theme=dark] .segments{background:#1c2532}
+html[data-theme=dark] .segments button{color:#a3aec0}
+html[data-theme=dark] .segments button.active{background:#405069;color:#f0f5ff}
+html[data-theme=dark] .search{background:#202936;border-color:#414f63;color:#97a8be}
+html[data-theme=dark] .search input{color:#e0e7f1}
+html[data-theme=dark] .search input::placeholder{color:#94a1b3}
+html[data-theme=dark] .iconbutton{color:#a4b2c6}
+html[data-theme=dark] button:hover:not(:disabled){background:#3b4b61}
+html[data-theme=dark] .primary{background:#348bea;color:#fff}
+html[data-theme=dark] .primary:hover:not(:disabled){background:#4a9cf7}
+html[data-theme=dark] .grid th{background:#293342;color:#a3b1c5}
+html[data-theme=dark] .grid td{border-bottom-color:#303a48}
+html[data-theme=dark] .grid:not(.csv) th:first-child,html[data-theme=dark] .grid:not(.csv) td:first-child{background:#202835;border-right-color:#45536a}
+html[data-theme=dark] .grid:not(.csv) th:nth-child(2){background:#2c3c50;color:#c6ddf7}
+html[data-theme=dark] .grid:not(.csv) td:nth-child(2){border-right-color:#354050}
+html[data-theme=dark] .grid tr.selected td{background:#2c4360;border-bottom-color:#384e69}
+html[data-theme=dark] .grid:not(.csv) tr.selected td:first-child{background:#2b3b51}
+html[data-theme=dark] .grid tr:not(.selected):hover td{background:#2d394a}
+html[data-theme=dark] .grid:not(.csv) tr:not(.selected):hover td:first-child{background:#273344}
+html[data-theme=dark] .grid:not(.csv) td.value:not(:has(.summary)):hover{background:#314662;box-shadow:inset 0 0 0 1px #5d82b0}
+html[data-theme=dark] .grid:not(.csv) .label{color:#afc0d7}
+html[data-theme=dark] .grid:not(.csv) .group-label{color:#d0e1f6}
+html[data-theme=dark] .grid:not(.csv) .value{color:#eef3fc}
+html[data-theme=dark] .grid:not(.csv) .value.numeric{color:#e2bb80}
+html[data-theme=dark] .summary,html[data-theme=dark] .type{color:#a0acbf}
+html[data-theme=dark] .type.string{color:#9bbdad}html[data-theme=dark] .type.number{color:#c8b28f}html[data-theme=dark] .type.boolean{color:#b4a9d0}
+html[data-theme=dark] .guide{border-color:#45546a}
+html[data-theme=dark] .nodeicon.group{color:#83b0e2}
+html[data-theme=dark] .booltext{color:#adc0d8}
+html[data-theme=dark] .bool.on{background:#489bf1}
+html[data-theme=dark] .detail{background:#252f3e}
+html[data-theme=dark] .detail-icon{background:#35445a;color:#97b5d8}
+html[data-theme=dark] .detail-path{color:#b6cbe5}
+html[data-theme=dark] .detail-note,html[data-theme=dark] .shortcut{color:#9eacbf}
+html[data-theme=dark] .statusbar{background:#202936;color:#a4b1c4}
+html[data-theme=dark] .ok{color:#9abcab}
+html[data-theme=dark] .source{color:#bfd3ee}
+html[data-theme=dark] .caption{color:#9aa8bd}
+html[data-theme=dark] .context{background:#2a3546f5;border-color:#506078;box-shadow:0 12px 40px #0005}
+html[data-theme=dark] .context .contexttitle{color:#a8b7cc}
+html[data-theme=dark] .context button:hover{background:#3379c9;color:#fff}
+html[data-theme=dark] dialog{background:#283343;border-color:#516078}
+html[data-theme=dark] dialog::backdrop{background:#0c15275c}
+html[data-theme=dark] .dialogpath{background:#1f2a39;color:#aec7e7}
+html[data-theme=dark] .field{color:#abb9cc}
+html[data-theme=dark] .field input,html[data-theme=dark] .field textarea,html[data-theme=dark] .field select{background:#1d2837;border-color:#475871;color:#e4edf9}
+html[data-theme=dark] .secondary{background:#3a4960;border-color:#52627a;color:#e2ebf8}
+html[data-theme=dark] .notebox,html[data-theme=dark] .transformtools span{color:#a6b5ca}
+html[data-theme=dark] .error{color:#f1a3a3}
+html[data-theme=dark] .csvoptions{background:#293442;color:#afbdd0}
+html[data-theme=dark] .csv td[style*="background"]{background:#493e28!important}
+html[data-theme=dark] .restore{background:#2e3d53;color:#e7f0fc}
+@media(max-width:500px){.appearance button{padding:4px 6px;font-size:11px}.brand{font-size:12px}.titlebar{padding:0 12px}}

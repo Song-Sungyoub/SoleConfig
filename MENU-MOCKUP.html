@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SoleConfig · 메뉴 구성 목업</title>
+<style>
+@font-face{font-family:Pretendard;src:url('Assets/Fonts/Pretendard-Regular.ttf')}
+*{box-sizing:border-box}body{--bg:#f7f9fc;--surface:#fff;--text:#27374d;--muted:#77869b;--line:#dee5ef;--hover:#e8f2ff;--blue:#087af5;margin:0;background:#e5eaf2;color:var(--text);font:14px Pretendard, sans-serif}
+body.dark{--bg:#252f3e;--surface:#232b37;--text:#e0e7f1;--muted:#adbed5;--line:#3c4b60;--hover:#304964;--blue:#459cf5;background:#151d29}
+button,input{font:inherit;color:inherit}button{border:0;background:transparent;cursor:pointer;border-radius:7px;padding:9px 12px}button:hover{background:var(--hover)}button:focus-visible{outline:2px solid var(--blue)}
+.guide{max-width:1180px;margin:28px auto 16px;display:flex;align-items:center;gap:14px;padding:0 12px}.guide strong{font-size:18px}.guide span{color:var(--muted)}.guide button{margin-left:auto;background:var(--surface)}
+.app{max-width:1180px;margin:0 auto 28px;border:1px solid var(--line);border-radius:16px;background:var(--bg);box-shadow:0 18px 60px #16264118;min-height:720px;position:relative}
+.titlebar{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid var(--line);position:relative}.brand{position:absolute;left:50%;transform:translateX(-50%);font-weight:bold;display:flex;align-items:center;gap:9px}.brand img{width:24px;height:24px}.lights{display:flex;gap:8px}.lights i{width:13px;height:13px;border-radius:50%;background:#ff5f57}.lights i:nth-child(2){background:#febc2e}.lights i:nth-child(3){background:#28c840}.titlebar.right{flex-direction:row-reverse}.right .lights{flex-direction:row-reverse}
+.tabs{display:flex;gap:8px;padding:12px 16px 0}.tab{padding:12px 16px;border-radius:0;color:var(--muted)}.tab.active{border-bottom:2px solid var(--blue);color:var(--text)}.tab span{margin-left:20px}
+.toolbar{padding:14px 20px;display:flex;align-items:center;gap:5px;border-bottom:1px solid var(--line)}.toolbar .save{margin-left:auto;background:var(--blue);color:white;padding:9px 22px}.mode{font-size:12px;color:var(--muted);margin-left:16px}.editbadge{color:var(--blue);margin-left:auto}
+.menuwrap{position:relative}.menu{display:none;position:absolute;top:calc(100% + 7px);left:0;min-width:250px;background:var(--surface);border:1px solid var(--line);padding:6px;border-radius:11px;box-shadow:0 12px 32px #0002;z-index:20}.settings .menu{left:auto;right:0;min-width:275px}.menu.open{display:block}.menu button{width:100%;display:flex;text-align:left;align-items:center;gap:8px;padding:10px;border-radius:6px;white-space:nowrap}.menu button span{margin-left:auto;color:var(--muted);font-size:12px}.menu .label{font-size:11px;color:var(--muted);padding:8px 10px 4px}.menu hr{border:0;border-top:1px solid var(--line);margin:5px}.submenu{display:none;margin:2px 4px 5px 14px;border-left:2px solid var(--line);padding-left:6px}.submenu.open{display:block}.check{width:15px;color:var(--blue)}
+.table{overflow:auto;min-height:490px}table{border-collapse:collapse;width:100%;table-layout:fixed}th{font-weight:normal;color:var(--muted);font-size:12px;text-align:left;height:36px;padding:0 16px;background:var(--bg)}td{height:44px;border-bottom:1px solid var(--line);padding:0 14px;background:var(--surface)}td.key{background:#e8eff9}body.dark td.key{background:#293749}.group td{background:#dce8f8;font-weight:bold}body.dark .group td{background:#2d405a}.top td{background:#cbddf5}body.dark .top td{background:#344c6e}td.blank{color:var(--muted)}tr:hover td{box-shadow:inset 0 0 0 100px #087af507}.type{font-size:12px;color:#33966d}.number{color:#528fdd}.bool{color:#c48935}.type select{font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:4px}.value{cursor:text}.value:focus{outline:2px solid var(--blue);outline-offset:-2px}.status{padding:12px 20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;display:flex;justify-content:space-between}.path{padding:12px 20px;font-size:12px;color:var(--muted)}.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--surface);padding:12px 20px;border-radius:9px;display:none;z-index:40}.context{position:fixed;top:0;left:0}.help{max-width:1180px;margin:auto;padding:0 12px 30px;color:var(--muted);line-height:1.8}.help b{color:var(--text)}dialog{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:28px;max-width:450px}dialog::backdrop{background:#0004}
+@media(max-width:800px){.app{margin:0 10px}.guide span{display:none}.mode{display:none}table{min-width:780px}}
+</style>
+<div class="guide"><strong>메뉴 구성 미리보기</strong><span>메뉴를 눌러 어떤 기능이 들어가는지 확인해 보세요.</span><button id="theme">☾ 다크 테마</button></div>
+<div class="app">
+<header class="titlebar"><div class="lights"><i></i><i></i><i></i></div><div class="brand"><img src="Assets/Icon/SoleConfig-64.png" alt="">SoleConfig</div>
+<div class="menuwrap settings"><button aria-label="설정" data-menu="settings">⚙ 설정</button><div class="menu" id="settings"></div></div></header>
+<div class="tabs"><button class="tab active">configuration.json <span>×</span></button><button class="tab">devices.xml <span>×</span></button></div>
+<nav class="toolbar">
+<div class="menuwrap"><button data-menu="file">파일 ▾</button><div class="menu" id="file"></div></div>
+<div class="menuwrap"><button data-menu="view">보기 ▾</button><div class="menu" id="view"></div></div>
+<div class="menuwrap"><button data-menu="edit">편집 ▾</button><div class="menu" id="edit"></div></div>
+<div class="menuwrap"><button data-menu="tools">도구 ▾</button><div class="menu" id="tools"></div></div>
+<span class="mode">B · 단계 보기</span><span class="editbadge"></span><button class="save" data-action="save">저장</button>
+</nav>
+<div class="table"><table><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:25%"><col style="width:15%"></colgroup>
+<thead><tr><th>1단계</th><th>2단계</th><th>3단계</th><th>4단계</th><th>자료형 · 상태</th></tr></thead>
+<tbody><tr class="group top"><td colspan="4">⌄ configuration</td><td class="type">Object</td></tr>
+<tr class="group"><td class="blank">├─</td><td colspan="3">⌄ server</td><td class="type">Object</td></tr>
+<tr><td></td><td class="blank">├─</td><td class="key">host</td><td class="value" tabindex="0">localhost</td><td class="type">String <button class="more">⋯</button></td></tr>
+<tr><td></td><td class="blank">├─</td><td class="key">port</td><td class="value" tabindex="0">8080</td><td class="type number">Number <button class="more">⋯</button></td></tr>
+<tr><td></td><td class="blank">└─</td><td class="key">enabled</td><td class="value" tabindex="0">true</td><td class="type bool">Boolean <button class="more">⋯</button></td></tr>
+<tr class="group"><td class="blank">└─</td><td colspan="3">⌄ logging</td><td class="type">Object</td></tr>
+<tr><td></td><td class="blank">├─</td><td class="key">level</td><td class="value" tabindex="0">INFO</td><td class="type">String <button class="more">⋯</button></td></tr>
+<tr><td></td><td class="blank">└─</td><td class="key">directory</td><td class="value" tabindex="0">./logs</td><td class="type">String <button class="more">⋯</button></td></tr>
+</tbody></table></div>
+<div class="path">configuration / server / host</div>
+<footer class="status"><span>JSON · UTF-8 · 변경 없음</span><span>100%</span></footer>
+</div>
+<div class="help"><b>눌러볼 곳</b>　파일 · 보기 · 편집 · 도구 · 설정 / 값 오른쪽의 ⋯<br>구조 편집을 켜면 값 메뉴에 추가·삭제가 나타납니다. 실제 파일을 수정하거나 저장하지 않는 메뉴 검토용 목업입니다.</div>
+<div class="menu context" id="context"></div><div class="toast" role="status"></div>
+<dialog><h3>목업 안내</h3><p></p><button onclick="this.closest('dialog').close()">닫기</button></dialog>
+<script>
+let structure=false,inline=false,sticky=false;let timer;
+const $=s=>document.querySelector(s);
+function toast(s){$('.toast').textContent=s;$('.toast').style.display='block';clearTimeout(timer);timer=setTimeout(()=>$('.toast').style.display='none',2600)}
+function close(){document.querySelectorAll('.menu.open').forEach(e=>e.classList.remove('open'));document.querySelectorAll('[data-menu]').forEach(b=>b.setAttribute('aria-expanded','false'))}
+function button(label,action,hint=''){const b=document.createElement('button');b.textContent=label;if(hint){const span=document.createElement('span');span.textContent=hint;b.append(span)}b.onclick=()=>{close();action()};return b}
+function fill(id,items){const m=$('#'+id);m.replaceChildren();for(const item of items){if(item===null){m.append(document.createElement('hr'));continue}m.append(button(...item))}}
+function demo(label){$('dialog p').textContent=label+' 화면으로 연결될 위치입니다. 이 파일에서는 메뉴 구성만 확인합니다.';$('dialog').showModal()}
+function theme(){document.body.classList.toggle('dark');$('#theme').textContent=document.body.classList.contains('dark')?'☀ 라이트 테마':'☾ 다크 테마';menus()}
+function toggleEdit(){structure=!structure;$('.editbadge').textContent=structure?'구조 편집 중':'';menus();toast(structure?'추가·삭제 메뉴가 활성화되었습니다.':'값 수정 모드로 돌아왔습니다.')}
+function menus(){
+fill('file',[['새 파일',()=>demo('새 파일'),'Ctrl+N'],['열기…',()=>demo('파일 열기'),'Ctrl+O'],['최근 파일 ▸',()=>recent()],null,['저장',()=>toast('저장 버튼 위치를 확인했습니다. 실제 파일은 저장하지 않습니다.'),'Ctrl+S'],['다른 이름으로 저장…',()=>demo('다른 이름으로 저장')],['파일 위치 열기',()=>demo('파일 위치')]]);
+fill('view',[['A · 트리 보기',()=>toast('보기 선택 위치 예시입니다. 본문은 B 보기 예시로 유지합니다.')],['✓ B · 단계 보기',()=>toast('B · 단계 보기 선택')],['C · 그룹 보기',()=>toast('보기 선택 위치 예시입니다. 본문은 B 보기 예시로 유지합니다.')],['화면 예시로 선택…',()=>demo('보기 비교')],null,['원문 보기',()=>demo('원문 보기')],['검색',()=>demo('검색'),'Ctrl+F'],null,['확대',()=>toast('확대 명령 위치')],['축소',()=>toast('축소 명령 위치')],['기본 배율',()=>toast('100%'),'Ctrl+0']]);
+fill('edit',[['실행 취소',()=>toast('실행 취소 명령 위치'),'Ctrl+Z'],['다시 실행',()=>toast('다시 실행 명령 위치'),'Ctrl+Y'],null,...(structure?[['구조 편집 완료',toggleEdit],['구조 편집 전체 취소',toggleEdit]]:[['구조 편집 시작',toggleEdit]])]);
+fill('tools',[['암호화…',()=>demo('암호화')],['복호화…',()=>demo('복호화')],['해시 계산…',()=>demo('해시 계산')]]);
+fill('settings',[[document.body.classList.contains('dark')?'테마: 다크 → 라이트':'테마: 라이트 → 다크',theme],[$('.titlebar').classList.contains('right')?'창 버튼: 오른쪽 → 왼쪽':'창 버튼: 왼쪽 → 오른쪽',()=>{$('.titlebar').classList.toggle('right');menus()}],null,[(inline?'☑':'☐')+' 셀에서 바로 수정 (Beta)',()=>{inline=!inline;menus();toast(inline?'값을 더블클릭해 입력할 수 있습니다.':'직접 편집 꺼짐')}],[(sticky?'☑':'☐')+' 상위 경로 고정 표시 (Beta)',()=>{sticky=!sticky;menus();toast('고정 표시 '+(sticky?'켜짐':'꺼짐')+' · 목업에서는 메뉴 선택만 반영')}],null,['Sole Store…',()=>demo('Sole Store')],['업데이트 확인…',()=>demo('업데이트 확인')],['SoleConfig 정보…',()=>demo('앱 정보')]]);
+}
+function recent(){fill('file',[['‹ 파일 메뉴',()=>{menus();$('#file').classList.add('open')}],null,['configuration.json',()=>toast('최근 파일 선택 예시')],['devices.xml',()=>toast('최근 파일 선택 예시')],null,['목록 지우기',()=>toast('목업 최근 파일 목록')]]);$('#file').classList.add('open')}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-menu]');if(b){const m=$('#'+b.dataset.menu),open=m.classList.contains('open');close();if(!open){m.classList.add('open');b.setAttribute('aria-expanded','true');m.querySelector('button')?.focus()}return}if(!e.target.closest('.menu')&&!e.target.closest('.more'))close()});
+function context(e){e.preventDefault();close();const items=[['값 수정',()=>toast('값 수정 명령 위치')],...(inline?[['팝업에서 수정…',()=>demo('값 수정')]]:[]),null,['값 복사',()=>toast('값 복사 명령 위치')],['경로 복사',()=>toast('경로 복사 명령 위치')],['원문 위치로 이동',()=>demo('원문 위치')],null,['암호화…',()=>demo('암호화')],['복호화…',()=>demo('복호화')],['해시 계산…',()=>demo('해시 계산')],null,...(structure?[['이름 변경…',()=>demo('이름 변경')],['항목 추가…',()=>demo('항목 추가')],['삭제',()=>toast('목업에서는 항목을 삭제하지 않습니다.')]]:[['구조 편집 시작',toggleEdit]])];fill('context',items);const m=$('#context');m.classList.add('open');m.style.left=Math.max(8,Math.min(e.clientX,innerWidth-m.offsetWidth-12))+'px';m.style.top=Math.max(8,Math.min(e.clientY,innerHeight-m.offsetHeight-12))+'px'}
+document.querySelectorAll('.more').forEach(b=>b.onclick=context);document.querySelectorAll('.value').forEach(v=>{v.oncontextmenu=context;v.ondblclick=()=>{if(inline){v.contentEditable='true';v.focus()}else demo('값 수정')};v.onblur=()=>{v.contentEditable='false'}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){close();return}const menu=e.target.closest('.menu');if(menu&&['ArrowDown','ArrowUp'].includes(e.key)){e.preventDefault();const list=[...menu.querySelectorAll('button')],i=list.indexOf(document.activeElement);list[(i+(e.key==='ArrowDown'?1:list.length-1))%list.length].focus()}});
+$('#theme').onclick=theme;$('.save').onclick=()=>toast('저장 버튼 위치를 확인했습니다. 실제 파일은 저장하지 않습니다.');menus();
+</script></html>
