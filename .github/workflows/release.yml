@@ -42,12 +42,28 @@ jobs:
           $version = ([xml](Get-Content ConfigEditor.csproj -Raw)).Project.PropertyGroup.Version
           if ($version -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid release version.' }
           $msi = "dist/SoleConfig-$version-x64.msi"
-          gh release create "v$version" $msi --target $env:GITHUB_SHA --title "SoleConfig $version" --notes-file RELEASE-NOTES.md --draft
-          if ($LASTEXITCODE -ne 0) { throw 'Release creation failed; existing releases are never overwritten.' }
-          $release = gh api "repos/$env:GITHUB_REPOSITORY/releases/tags/v$version" | ConvertFrom-Json
-          if ($LASTEXITCODE -ne 0) { throw 'Cannot verify release.' }
+          function Invoke-Gh([string[]]$Arguments) {
+            $output = & gh @Arguments 2>&1
+            if ($LASTEXITCODE -ne 0) {
+              $message = ($output | Out-String).Trim().Replace('%', '%25').Replace("`r", '%0D').Replace("`n", '%0A')
+              Write-Output "::error::$message"
+              throw 'GitHub release operation failed.'
+            }
+            return $output
+          }
+          $releases = Invoke-Gh @('api', "repos/$env:GITHUB_REPOSITORY/releases?per_page=100") | ConvertFrom-Json
+          $release = $releases | Where-Object tag_name -eq "v$version"
+          if ($release -and -not $release.draft) { throw 'Published releases are never overwritten; increase the version.' }
+          if ($release) {
+            Invoke-Gh @('release', 'edit', "v$version", '--target', $env:GITHUB_SHA, '--notes-file', 'RELEASE-NOTES.md')
+            Invoke-Gh @('release', 'upload', "v$version", $msi, '--clobber')
+          } else {
+            Invoke-Gh @('release', 'create', "v$version", $msi, '--target', $env:GITHUB_SHA, '--title', "SoleConfig $version", '--notes-file', 'RELEASE-NOTES.md', '--draft')
+          }
+          $releases = Invoke-Gh @('api', "repos/$env:GITHUB_REPOSITORY/releases?per_page=100") | ConvertFrom-Json
+          $release = $releases | Where-Object tag_name -eq "v$version"
+          if (-not $release -or -not $release.draft) { throw 'Expected an unpublished release.' }
           $asset = @($release.assets | Where-Object name -eq "SoleConfig-$version-x64.msi")
           $hash = (Get-FileHash $msi -Algorithm SHA256).Hash.ToLowerInvariant()
           if ($asset.Count -ne 1 -or $asset[0].digest -ne "sha256:$hash" -or $asset[0].size -ne (Get-Item $msi).Length) { throw 'Uploaded installer verification failed; release remains a draft.' }
-          gh release edit "v$version" --draft=false --latest
-          if ($LASTEXITCODE -ne 0) { throw 'Release publication failed.' }
+          Invoke-Gh @('release', 'edit', "v$version", '--draft=false', '--latest')

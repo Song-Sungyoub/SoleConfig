@@ -19,4 +19,4 @@ API 규격: https://docs.github.com/en/rest/releases/releases#get-the-latest-rel
 
 ## 자동 게시
 
-`ConfigEditor.csproj`의 버전과 `RELEASE-NOTES.md`를 함께 수정하여 main에 push하면 GitHub Actions가 Windows에서 MSI를 빌드하고 자체 시험과 업데이트 도우미 시험을 실행한다. 이후 초안 Release에 설치 파일을 첨부하고 업로드된 SHA-256·크기를 확인한 뒤 Latest로 공개한다. workflow 변경과 수동 실행도 지원하며 이미 존재하는 버전은 덮어쓰지 않는다. 실패 시 Actions 로그를 확인한다. 업로드 검증에 실패한 초안은 자동 공개하지 않는다.
+`ConfigEditor.csproj`의 버전과 `RELEASE-NOTES.md`를 함께 수정하여 main에 push하면 GitHub Actions가 Windows에서 MSI를 빌드하고 자체 시험과 업데이트 도우미 시험을 실행한다. 이후 초안 Release에 설치 파일을 첨부하고 업로드된 SHA-256·크기를 확인한 뒤 Latest로 공개한다. workflow 변경과 수동 실행도 지원하며 이미 공개한 버전은 덮어쓰지 않는다. 같은 버전의 미공개 초안만 재시도 시 교체할 수 있다. 실패 시 Actions 로그와 오류 주석을 확인한다. 업로드 검증에 실패한 초안은 자동 공개하지 않는다.
